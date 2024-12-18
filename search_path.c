@@ -12,8 +12,11 @@ char *search_dir(char *filename, char *dir)
 	DIR *d;
 	struct dirent *entry;
 	char *path;
+	size_t length;
 
-	path = malloc(1000);
+	/* +2 for '/' and '\0' */
+	length = strlen(dir) + strlen(filename + 2);
+	path = malloc(length);
 
 	if (!path)
 	{
@@ -72,6 +75,8 @@ char *search_path(char *filename, char **env)
 		i++;
 	}
 
+	path = strdup(env[i] + 5);
+
 	if (!path)
 	{
 		fprintf(stderr, "Error: PATH environment variable not found\n");
@@ -83,9 +88,14 @@ char *search_path(char *filename, char **env)
 	{
 		full_path = search_dir(filename, dir);
 		if (full_path)
+		{
+			free(path);
 			return (full_path);
+		}
 		dir = strtok(NULL, ":");
 	}
+
+	free(path);
 
 	return (NULL);
 }
