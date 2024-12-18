@@ -15,7 +15,7 @@ char *search_dir(char *filename, char *dir)
 	size_t length;
 
 	/* +2 for '/' and '\0' */
-	length = strlen(dir) + strlen(filename + 2);
+	length = strlen(dir) + strlen(filename) + 2;
 	path = malloc(length);
 
 	if (!path)

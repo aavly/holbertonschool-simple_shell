@@ -22,12 +22,17 @@ void execute(char **arguments, char **env)
 	if (arguments[0] == NULL)
 		return;
 
-	command = search_path(arguments[0], env);
-
-	if (command == NULL)
+	if (arguments[0][0] == '/' || arguments[0][0] == '.')
+		command = arguments[0];
+	else
 	{
-		fprintf(stderr, "%s: Command not found\n", arguments[0]);
-		return;
+		command = search_path(arguments[0], env);
+
+		if (command == NULL)
+		{
+			fprintf(stderr, "%s: Command not found\n", arguments[0]);
+			return;
+		}
 	}
 
 	pid = fork();
