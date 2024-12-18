@@ -6,6 +6,7 @@
  * @dir: directory to search command
  * Return: path to file if found, otherwise NULL
  */
+
 char *search_dir(char *filename, char *dir)
 {
 	DIR *d;
@@ -17,7 +18,7 @@ char *search_dir(char *filename, char *dir)
 	if (!path)
 	{
 		perror("malloc");
-		return (NULL);;
+		return (NULL);
 	}
 
 	d = opendir(dir);
@@ -28,7 +29,7 @@ char *search_dir(char *filename, char *dir)
 			if (strcmp(entry->d_name, filename) == 0)
 			{
 		/* make new path using a buffer with enough capacity to hold result */
-				snprintf(path, 1000, "%s/%s", dir , filename);
+				snprintf(path, 1000, "%s/%s", dir, filename);
 				closedir(d);
 				return (path);
 			}
@@ -43,10 +44,11 @@ char *search_dir(char *filename, char *dir)
 
 /**
  * search_path - search for a file inside PATH
- * @filename:
- * @env:
+ * @filename: name of file to search for
+ * @env: environment variable PATH
  * Return: path to file
  */
+
 char *search_path(char *filename, char **env)
 {
 	char *path;
