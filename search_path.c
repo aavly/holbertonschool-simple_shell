@@ -54,12 +54,12 @@ char *search_dir(char *filename, char *dir)
 
 char *search_path(char *filename, char **env)
 {
-	char *path;
-	char *full_path;
+	char *path, *path_copy, *full_path;
 	char *dir;
 	int i;
 
 	path = NULL;
+	path_copy = NULL;
 	full_path = NULL;
 	i = 0;
 
@@ -70,16 +70,26 @@ char *search_path(char *filename, char **env)
 		{
 			/* this skips the "PATH=" prefix */
 			path = env[i] + 5;
+			if (!path)
+			{
+				fprintf(stderr, "Error: strdup failed\n");
+				return (NULL);
+			}
 			break;
 		}
 		i++;
 	}
 
-	path = strdup(env[i] + 5);
-
 	if (!path)
 	{
 		fprintf(stderr, "Error: PATH environment variable not found\n");
+		return (NULL);
+	}
+
+	path_copy = strdup(path);
+	if (!path_copy)
+	{
+		perror("strdup");
 		return (NULL);
 	}
 
@@ -95,7 +105,7 @@ char *search_path(char *filename, char **env)
 		dir = strtok(NULL, ":");
 	}
 
-	free(path);
+	free(path_copy);
 
 	return (NULL);
 }

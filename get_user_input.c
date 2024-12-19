@@ -42,6 +42,8 @@ char **get_user_input()
 			{
 				perror("realloc");
 				free(buffer);
+				for (j = 0; j < i; j++)
+					free(arguments[j]);
 				exit(EXIT_FAILURE);
 			}
 		}

@@ -51,9 +51,9 @@ void execute(char **arguments, char **env)
 	else
 	{
 		wait(&status);
+		if (arguments[0][0] != '/' && arguments[0][0] != '.')
+			free(command);
 	}
-
-	free(command);
 }
 
 /**
@@ -66,6 +66,7 @@ void execute(char **arguments, char **env)
 int main(int argc, char *argv[], char **env)
 {
 	char **arguments;
+	int i;
 
 	/* unused variables */
 	(void)argc;
@@ -86,10 +87,15 @@ int main(int argc, char *argv[], char **env)
 
 		if (strcmp(arguments[0], "exit") == 0)
 		{
+			for (i = 0; arguments[i]; i++)
+				free(arguments[i]);
 			free(arguments);
 			break;
 		}
 		execute(arguments, env);
+
+		for (i = 0; arguments[i]; i++)
+			free(arguments[i]);
 		free(arguments);
 	}
 
