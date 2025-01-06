@@ -10,10 +10,16 @@ char *search_dir(char *filename, char *dir)
 {
 	DIR *d;
 	struct dirent *entry;
+<<<<<<< HEAD
 	char *path;
 
 	path = malloc(strlen(dir) + strlen(filename) + 2);
 	if (!path)
+=======
+	char *full_path = malloc(sizeof(char *));
+
+	if (full_path == NULL)
+>>>>>>> refs/remotes/origin/main
 	{
 		perror("malloc");
 		return (NULL);
@@ -26,16 +32,26 @@ char *search_dir(char *filename, char *dir)
 		{
 			if (strcmp(entry->d_name, filename) == 0)
 			{
+<<<<<<< HEAD
 		/* make new path using a buffer with enough capacity to hold result */
 				snprintf(path, strlen(dir) + strlen(filename),
 				"%s/%s", dir, filename);
+=======
+				/* make new path using a buffer with enough capacity to hold result */
+				snprintf(full_path, strlen(dir) + strlen(filename) + 2, "%s/%s", dir, filename);
+>>>>>>> refs/remotes/origin/main
 				closedir(d);
-				return (path);
+				return (full_path);
 			}
 		}
 		closedir(d);
 	}
+<<<<<<< HEAD
 	free(path);
+=======
+
+	free(full_path);
+>>>>>>> refs/remotes/origin/main
 	return (NULL);
 }
 
