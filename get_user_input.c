@@ -59,7 +59,7 @@ char **get_user_input()
 	if (getline(&buffer, &n, stdin) == -1)
 	{
 		free(buffer);
-		/* exit on CTRL+D */
+		free_memory(arguments);
 		exit(0);
 	}
 

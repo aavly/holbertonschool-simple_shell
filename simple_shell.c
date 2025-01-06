@@ -81,7 +81,9 @@ void execute(char **arguments, char **env)
 		else
 			exit_status = 1;
 	}
-
+	
+	if (command != arguments[0])
+		free(command);
 }
 
 /**
